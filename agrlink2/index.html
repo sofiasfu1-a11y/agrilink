@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgrLink - Agricultural Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Login/Signup Page -->
+    <div id="login-page" class="page active">
+        <div class="container">
+            <div class="login-card">
+                <h1>🌾 AgrLink</h1>
+                <h2>Welcome to Agricultural Marketplace</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input type="tel" id="phoneNumber" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Role</label>
+                        <select id="role" required>
+                            <option value="">Select Role</option>
+                            <option value="farmer">Farmer</option>
+                            <option value="buyer">Buyer</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Continue</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Farmer Dashboard -->
+    <div id="farmer-dashboard" class="page">
+        <div class="container">
+            <header>
+                <h1>👨‍🌾 Welcome, Farmer</h1>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </header>
+            <div class="dashboard-buttons">
+                <button class="btn btn-primary btn-large" onclick="showPage('add-product')">Add Product</button>
+                <button class="btn btn-primary btn-large" onclick="showPage('my-products')">My Products</button>
+                <button class="btn btn-primary btn-large" onclick="showPage('orders-received')">Orders Received</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Page -->
+    <div id="add-product" class="page">
+        <div class="container">
+            <header>
+                <h1>Add New Product</h1>
+                <button class="btn btn-secondary" onclick="showPage('farmer-dashboard')">← Back to Dashboard</button>
+            </header>
+            <div class="form-card">
+                <form id="add-product-form">
+                    <div class="form-group">
+                        <label for="productName">Product Name</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Quantity (kg)</label>
+                        <input type="number" id="quantity" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price (ETB)</label>
+                        <input type="number" id="price" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productImage">Product Image</label>
+                        <select id="productImage" required>
+                            <option value="">Select Product Image</option>
+                            <option value="potato">Potato</option>
+                            <option value="tomato">Tomato</option>
+                            <option value="onion">Onion</option>
+                            <option value="green-pepper">Green Pepper</option>
+                            <option value="carrot">Carrot</option>
+                            <option value="teff">Teff</option>
+                            <option value="wheat">Wheat</option>
+                            <option value="avocado">Avocado</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Products Page -->
+    <div id="my-products" class="page">
+        <div class="container">
+            <header>
+                <h1>My Products</h1>
+                <button class="btn btn-secondary" onclick="showPage('farmer-dashboard')">← Back to Dashboard</button>
+            </header>
+            <div id="products-grid" class="products-grid">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Orders Received Page -->
+    <div id="orders-received" class="page">
+        <div class="container">
+            <header>
+                <h1>Orders Received</h1>
+                <button class="btn btn-secondary" onclick="showPage('farmer-dashboard')">← Back to Dashboard</button>
+            </header>
+            <div id="orders-list" class="orders-list">
+                <!-- Orders will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Buyer Homepage -->
+    <div id="buyer-homepage" class="page">
+        <div class="container">
+            <header>
+                <h1>🛒 Welcome, Buyer</h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="showPage('cart')">🛒 Cart (<span id="cart-count">0</span>)</button>
+                    <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                </div>
+            </header>
+            <div class="search-section">
+                <input type="text" id="search-bar" placeholder="Search products..." onkeyup="filterProducts()">
+            </div>
+            <div class="categories-section">
+                <h2>Categories</h2>
+                <div class="categories">
+                    <button class="category-btn active" onclick="filterByCategory('all')">All</button>
+                    <button class="category-btn" onclick="filterByCategory('vegetables')">Vegetables</button>
+                    <button class="category-btn" onclick="filterByCategory('grains')">Grains</button>
+                    <button class="category-btn" onclick="filterByCategory('fruits')">Fruits</button>
+                </div>
+            </div>
+            <div id="buyer-products-grid" class="products-grid">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Page -->
+    <div id="cart" class="page">
+        <div class="container">
+            <header>
+                <h1>🛒 Shopping Cart</h1>
+                <button class="btn btn-secondary" onclick="showPage('buyer-homepage')">← Continue Shopping</button>
+            </header>
+            <div id="cart-items" class="cart-items">
+                <!-- Cart items will be loaded here -->
+            </div>
+            <div class="cart-summary">
+                <div class="total-section">
+                    <h2>Total: <span id="cart-total">0</span> ETB</h2>
+                    <button class="btn btn-primary btn-large" onclick="showPage('checkout')" id="checkout-btn" disabled>Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Page -->
+    <div id="checkout" class="page">
+        <div class="container">
+            <header>
+                <h1>Checkout</h1>
+                <button class="btn btn-secondary" onclick="showPage('cart')">← Back to Cart</button>
+            </header>
+            <div class="checkout-content">
+                <div class="order-summary">
+                    <h2>Order Summary</h2>
+                    <div id="checkout-items"></div>
+                    <div class="summary-total">
+                        <h3>Total: <span id="checkout-total">0</span> ETB</h3>
+                    </div>
+                </div>
+                <div class="payment-section">
+                    <h2>Payment Method</h2>
+                    <div class="payment-options">
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="telebirr" checked>
+                            <span>📱 Telebirr</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="cbe-birr">
+                            <span>🏦 CBE Birr</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="cash">
+                            <span>💵 Cash on Delivery</span>
+                        </label>
+                    </div>
+                    <button class="btn btn-primary btn-large" onclick="placeOrder()">Place Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Confirmation Page -->
+    <div id="order-confirmation" class="page">
+        <div class="container">
+            <div class="confirmation-card">
+                <div class="confirmation-icon">✅</div>
+                <h1>Your order has been placed!</h1>
+                <p>Thank you for your purchase. Your order will be processed shortly.</p>
+                <button class="btn btn-primary btn-large" onclick="showPage('buyer-homepage')">Return to Buyer Home</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
